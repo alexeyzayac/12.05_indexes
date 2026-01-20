@@ -41,3 +41,12 @@ where date(p.payment_date) = '2005-07-30' and p.payment_date = r.rental_date and
 
 ![img](img/screenshot_2.png)
 
+1. Вместо DISTINCT и оконной функции SUM(p.amount) OVER (PARTITION BY c.customer_id, f.title) целесообразно использовать агрегацию через GROUP BY.
+
+2. Использовать JOIN с явным указанием условия соединения в ON.
+
+3. Избегать применения функции DATE(), чтобы не ломать возможные индексы.
+
+4. Для повышения производительности можно добавить индекс INDEX(payment_date) в таблице payment.
+
+5. Если CONCAT не является обязательным, лучше возвращать last_name и first_name отдельными полями, а объединение выполнять на уровне приложения.
